@@ -1,0 +1,75 @@
+package com.greatlearing.dsa;
+
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.NoSuchElementException;
+
+public class StackUsingQueues {
+	LinkedList<Integer> queue;
+	LinkedList<Integer> tmpQueue;
+	
+	StackUsingQueues() {
+    	queue = new LinkedList<Integer>();
+    	tmpQueue = new LinkedList<Integer>();		
+	}
+	
+	void push(int data) {
+	        /* if no element is present in queue then
+	        enqueue the new element into queue  */         
+	    if (isEmpty()) {
+	    	queue.add(data);
+	    }
+	    else
+	    {
+	        /* if elements are present in queue then
+	         * dequeue all the elements to 
+	         * temporary Queue tempQueue */             
+	        int size = queue.size();
+	        
+	        for (int i = 0; i < size; i++)
+	            tmpQueue.add(queue.remove());  
+	        
+	        /* enqueue the new element into queue */
+	        queue.add(data);   
+	        
+	        /* dequeue all the elements from
+	         * temporary Queue tempQueue to queue */  
+	        
+	        for (int i = 0; i < size; i++)
+	        	queue.add(tmpQueue.remove());
+	    }		
+	}
+	
+	int pop() {
+	    if (isEmpty())
+	        throw new NoSuchElementException("Underflow Exception");        
+	    return queue.remove();
+	}
+
+    public boolean isEmpty()
+    {
+        return queue.size() == 0 ;
+    }
+    
+    
+    public int getSize()
+    {
+        return queue.size();
+    }    
+  
+    
+    public void display()
+    {
+        System.out.print("\nStack = ");
+        int size = getSize();
+        if (isEmpty())
+            System.out.print("Empty\n");
+        else
+        {
+            Iterator itr = queue.iterator();
+            while (itr.hasNext())
+                System.out.print(itr.next()+" ");
+            System.out.println();
+        }
+    }
+}
